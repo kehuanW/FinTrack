@@ -1,0 +1,331 @@
+/* File: src/styles/Portfolio.css */
+.portfolio {
+    padding: 24px 0;
+  }
+  
+  .portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .portfolio-header h1 {
+    color: #2e3b52;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  .add-investment-btn {
+    background-color: #00c853;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .add-investment-btn:hover {
+    background-color: #00b248;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+  }
+  
+  .add-investment-btn:active {
+    transform: translateY(0);
+  }
+  
+  .portfolio-loading {
+    text-align: center;
+    padding: 60px 0;
+    font-size: 18px;
+    color: #6b7c93;
+  }
+  
+  /* Controls */
+  .portfolio-controls {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .search-container {
+    flex: 1;
+    max-width: 400px;
+    min-width: 250px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: white;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+  }
+  
+  .search-input::placeholder {
+    color: #9ca3af;
+  }
+  
+  .filter-container {
+    min-width: 200px;
+  }
+  
+  .platform-filter {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .platform-filter:focus {
+    outline: none;
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+  }
+  
+  /* Portfolio Table */
+  .portfolio-table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e5e9;
+  }
+  
+  .portfolio-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+  
+  .portfolio-table th,
+  .portfolio-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e1e5e9;
+    vertical-align: middle;
+  }
+  
+  .portfolio-table th {
+    background-color: #f8f9fa;
+    color: #6b7c93;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .portfolio-table th.sortable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  
+  .portfolio-table th.sortable:hover {
+    background-color: #e9ecef;
+    color: #4a6cf7;
+  }
+  
+  .portfolio-table tbody tr {
+    transition: all 0.3s ease;
+  }
+  
+  .portfolio-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .portfolio-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Cell specific styles */
+  .symbol-cell {
+    font-weight: 700;
+    color: #4a6cf7;
+    font-size: 16px;
+  }
+  
+  .name-cell {
+    color: #2e3b52;
+    font-weight: 500;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .profit-loss-cell {
+    font-weight: 600;
+  }
+  
+  .profit-loss-cell.profit {
+    color: #00c853;
+  }
+  
+  .profit-loss-cell.loss {
+    color: #ff4757;
+  }
+  
+  .percentage {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 4px;
+    display: block;
+    margin-top: 2px;
+  }
+  
+  .delete-btn {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .delete-btn:hover {
+    background-color: #ff3742;
+    transform: scale(1.05);
+  }
+  
+  .delete-btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7c93;
+    font-size: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e5e9;
+  }
+  
+  .empty-state p {
+    margin: 0;
+    line-height: 1.6;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .portfolio-header {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+    
+    .portfolio-header h1 {
+      font-size: 24px;
+    }
+    
+    .add-investment-btn {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .portfolio-controls {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .search-container,
+    .filter-container {
+      max-width: none;
+      width: 100%;
+      min-width: auto;
+    }
+    
+    .portfolio-table-container {
+      overflow-x: auto;
+    }
+    
+    .portfolio-table {
+      min-width: 700px;
+    }
+    
+    .portfolio-table th,
+    .portfolio-table td {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .name-cell {
+      max-width: 150px;
+    }
+    
+    .percentage {
+      display: inline;
+      margin-left: 4px;
+      margin-top: 0;
+    }
+  }
+  
+  /* Tablet responsiveness */
+  @media (max-width: 1024px) {
+    .portfolio-controls {
+      gap: 16px;
+    }
+    
+    .search-container {
+      max-width: 300px;
+    }
+  }
+  
+  /* Loading animation for table rows */
+  .portfolio-table tbody tr.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  /* Sort indicator styles */
+  .portfolio-table th.sortable::after {
+    content: ' ↕️';
+    opacity: 0.3;
+    font-size: 12px;
+    margin-left: 4px;
+  }
+  
+  .portfolio-table th.sortable:hover::after {
+    opacity: 0.7;
+  }
