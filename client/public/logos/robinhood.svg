@@ -1,0 +1,6 @@
+<!-- File: public/logos/robinhood.svg -->
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="56" height="56" rx="12" fill="#00C851"/>
+  <path d="M28 12L38 28H32L28 22L24 28H18L28 12Z" fill="white"/>
+  <rect x="26" y="28" width="4" height="16" fill="white"/>
+</svg>

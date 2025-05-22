@@ -1,0 +1,6 @@
+<!-- File: public/logos/td-ameritrade.svg -->
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="56" height="56" rx="12" fill="#00AA44"/>
+  <text x="28" y="30" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">TD</text>
+  <text x="28" y="42" text-anchor="middle" fill="white" font-family="Arial" font-size="8">AMERITRADE</text>
+</svg>
