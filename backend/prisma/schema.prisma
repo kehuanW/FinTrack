@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  passwordHash String   @map("password_hash")
+  name        String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  investments     Investment[]
+  importHistory   ImportHistory[]
+  settings        UserSettings?
+
+  @@map("users")
+}
+
+model Platform {
+  id               String   @id
+  name             String
+  description      String?
+  supportedFormats String[] @map("supported_formats")
+  logoUrl          String?  @map("logo_url")
+  
+  investments   Investment[]
+  importHistory ImportHistory[]
+
+  @@map("platforms")
+}
+
+model Investment {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  platformId    String   @map("platform_id")
+  symbol        String
+  name          String
+  quantity      Decimal
+  purchasePrice Decimal  @map("purchase_price")
+  currentPrice  Decimal  @map("current_price")
+  purchaseDate  DateTime @map("purchase_date")
+  currency      String   @default("USD")
+  sector        String?
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platform     Platform       @relation(fields: [platformId], references: [id])
+  priceHistory PriceHistory[]
+
+  @@map("investments")
+}
+
+model PriceHistory {
+  id           String    @id @default(cuid())
+  investmentId String    @map("investment_id")
+  price        Decimal
+  recordedAt   DateTime  @default(now()) @map("recorded_at")
+
+  investment Investment @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+
+  @@map("price_history")
+}
+
+model ImportHistory {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  platformId        String   @map("platform_id")
+  filename          String
+  totalRecords      Int      @map("total_records")
+  successfulRecords Int      @map("successful_records")
+  status            String   // 'success', 'partial', 'failed'
+  errorDetails      String?  @map("error_details")
+  importedAt        DateTime @default(now()) @map("imported_at")
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platform Platform @relation(fields: [platformId], references: [id])
+
+  @@map("import_history")
+}
+
+model UserSettings {
+  id            String   @id @default(cuid())
+  userId        String   @unique @map("user_id")
+  currency      String   @default("USD")
+  theme         String   @default("light")
+  language      String   @default("en")
+  notifications Json     @default("{}")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
