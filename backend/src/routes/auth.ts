@@ -1,8 +1,11 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
+
+const JWT_SECRET = 'default_secret_key';
+const JWT_EXPIRES_IN = '1h';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -19,7 +22,7 @@ const loginSchema = z.object({
 });
 
 // Register
-router.post('/register', async (req, res) => {
+router.post('/register', async (req: Request, res: Response): Promise<any> => {
   try {
     const { email, password, name } = registerSchema.parse(req.body);
     
@@ -46,18 +49,18 @@ router.post('/register', async (req, res) => {
     // Generate JWT
     const token = jwt.sign(
       { userId: user.id },
-      process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
     );
 
-    res.status(201).json({ user, token });
+    return res.status(201).json({ user, token });
   } catch (error) {
-    res.status(400).json({ error: 'Registration failed' });
+    return res.status(400).json({ error: 'Registration failed' });
   }
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', async (req: Request, res: Response): Promise<any> => {
   try {
     const { email, password } = loginSchema.parse(req.body);
 
@@ -76,11 +79,11 @@ router.post('/login', async (req, res) => {
     // Generate JWT
     const token = jwt.sign(
       { userId: user.id },
-      process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
     );
 
-    res.json({
+    return res.json({
       user: {
         id: user.id,
         email: user.email,
@@ -88,8 +91,10 @@ router.post('/login', async (req, res) => {
       },
       token
     });
+
   } catch (error) {
-    res.status(400).json({ error: 'Login failed' });
+    return res.status(400).json({ error: 'Login failed' });
+
   }
 });
 
