@@ -20,7 +20,7 @@ const investmentSchema = z.object({
 });
 
 // Get all investments for user
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const investments = await prisma.investment.findMany({
       where: { userId: req.user.userId },
@@ -35,7 +35,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // Create investment
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const data = investmentSchema.parse(req.body);
     
@@ -55,7 +55,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // Update investment
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const data = investmentSchema.partial().parse(req.body);
@@ -69,7 +69,8 @@ router.put('/:id', authenticateToken, async (req, res) => {
     });
 
     if (investment.count === 0) {
-      return res.status(404).json({ error: 'Investment not found' });
+      res.status(404).json({ error: 'Investment not found' });
+      return;
     }
 
     res.json({ message: 'Investment updated successfully' });
@@ -79,7 +80,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 // Delete investment
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
 
@@ -88,7 +89,8 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     });
 
     if (result.count === 0) {
-      return res.status(404).json({ error: 'Investment not found' });
+      res.status(404).json({ error: 'Investment not found' });
+      return;
     }
 
     res.json({ message: 'Investment deleted successfully' });
