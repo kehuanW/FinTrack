@@ -22,14 +22,15 @@ const loginSchema = z.object({
 });
 
 // Register
-router.post('/register', async (req: Request, res: Response): Promise<any> => {
+router.post('/register', async (req: Request, res: Response) => {
   try {
     const { email, password, name } = registerSchema.parse(req.body);
     
     // Check if user exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
+      res.status(400).json({ error: 'User already exists' });
+      return;
     }
 
     // Hash password
@@ -53,27 +54,29 @@ router.post('/register', async (req: Request, res: Response): Promise<any> => {
       { expiresIn: JWT_EXPIRES_IN }
     );
 
-    return res.status(201).json({ user, token });
+    res.status(201).json({ user, token });
   } catch (error) {
-    return res.status(400).json({ error: 'Registration failed' });
+    res.status(400).json({ error: 'Registration failed' });
   }
 });
 
 // Login
-router.post('/login', async (req: Request, res: Response): Promise<any> => {
+router.post('/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = loginSchema.parse(req.body);
 
     // Find user
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      res.status(401).json({ error: 'Invalid credentials' });
+      return;
     }
 
     // Check password
     const isValidPassword = await bcrypt.compare(password, user.passwordHash);
     if (!isValidPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      res.status(401).json({ error: 'Invalid credentials' });
+      return;
     }
 
     // Generate JWT
@@ -83,7 +86,7 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
       { expiresIn: JWT_EXPIRES_IN }
     );
 
-    return res.json({
+    res.json({
       user: {
         id: user.id,
         email: user.email,
@@ -93,7 +96,7 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
     });
 
   } catch (error) {
-    return res.status(400).json({ error: 'Login failed' });
+    res.status(400).json({ error: 'Login failed' });
 
   }
 });
